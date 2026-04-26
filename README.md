@@ -1,6 +1,6 @@
 # Code Discipline
 
-> A coding methodology for Claude Code that enforces structured thinking, surgical changes, and verifiable success criteria.
+> *A coding methodology for Claude Code that enforces structured thinking, surgical changes, and verifiable success criteria.*
 
 ---
 
@@ -30,7 +30,7 @@ Code Discipline is a **coding methodology layer**. It controls:
 | Success criteria | Every task has a verifiable definition of done |
 | Priority order | Stability → Reliability → Readability → ... → Elegance |
 
-It does **not** own: honesty in reporting, commit gates, documentation standards, or mistake handling — those belong to **truth-serum**.
+It does **not** own: honesty in reporting, documentation standards, or mistake handling — those belong to **truth-serum**.
 
 ---
 
@@ -64,7 +64,13 @@ Plus: a mandatory prohibitions table, mandatory review questions before each ste
 
 When decisions conflict, this order applies:
 
-1. Stability → 2. Reliability → 3. Readability → 4. Maintainability → 5. Scalability → 6. Performance → 7. Elegance
+1. Stability
+2. Reliability
+3. Readability
+4. Maintainability
+5. Scalability
+6. Performance
+7. Elegance
 
 ---
 
@@ -72,42 +78,111 @@ When decisions conflict, this order applies:
 
 ### Option A — Claude Code Plugin (recommended)
 
-```bash
-claude mcp install code-discipline
+In a Claude Code session, run:
+
+```
+/plugin marketplace add eliranpv11/code-discipline-skills
+/plugin install code-discipline@code-discipline
 ```
 
-### Option B — Claude.ai Web UI
+The skill is installed globally across all your Claude Code sessions immediately.
 
-Upload `code-discipline.skill` via **Settings → Skills → Upload skill file**.
+---
+
+### Option B — Claude.ai (Web & Desktop)
+
+1. Go to **claude.ai → Customize → Skills**
+2. Click **+** → **Create skill**
+3. Paste the contents of [`SKILL.md`](./SKILL.md) into the skill editor
+4. Name it `code-discipline` and save
+5. Toggle it on ✅
+
+---
 
 ### Option C — Personal install (all your projects)
 
+Install once, available across all local Claude Code projects:
+
 ```bash
-mkdir -p ~/.claude/skills/code-discipline
-cp SKILL.md ~/.claude/skills/code-discipline/SKILL.md
+mkdir -p ~/.claude/skills
+git clone https://github.com/eliranpv11/code-discipline-skills.git \
+  ~/.claude/skills/code-discipline
 ```
+
+---
 
 ### Option D — Project install (shared with team)
 
+Install in a project repo so the whole team uses it:
+
 ```bash
-mkdir -p .claude/skills/code-discipline
-cp SKILL.md .claude/skills/code-discipline/SKILL.md
+mkdir -p .claude/skills
+git clone https://github.com/eliranpv11/code-discipline-skills.git \
+  .claude/skills/code-discipline
+git add .claude/skills/
+git commit -m "chore: add Code Discipline skill"
 ```
 
-### Option E — CLAUDE.md (zero-install, works everywhere)
+---
 
-Copy the contents of `CLAUDE.md` into your project's `CLAUDE.md` file.
-Merge with any existing project-specific instructions.
+### Option E — One-liner (no git required)
+
+Download just the skill file directly:
+
+```bash
+mkdir -p ~/.claude/skills/code-discipline && \
+  curl -o ~/.claude/skills/code-discipline/SKILL.md \
+  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/SKILL.md
+```
+
+---
+
+### Option F — CLAUDE.md paste (zero-install, works everywhere)
+
+The `CLAUDE.md` file contains the complete skill content without YAML frontmatter — ready to paste directly into any project.
+
+1. Copy the contents of [`CLAUDE.md`](./CLAUDE.md)
+2. Paste into your project's `CLAUDE.md` file (merge with existing content if needed)
+
+This approach requires no installation and works in any environment that reads `CLAUDE.md`.
+
+---
+
+### Option G — Cursor IDE
+
+1. Copy [`.cursor/rules/code-discipline.mdc`](./.cursor/rules/code-discipline.mdc) to your project's `.cursor/rules/` directory
+2. Cursor will apply the rule automatically on every request (`alwaysApply: true`)
+
+Or install manually:
+
+```bash
+mkdir -p .cursor/rules
+curl -o .cursor/rules/code-discipline.mdc \
+  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/.cursor/rules/code-discipline.mdc
+```
 
 ---
 
 ## How to Use
 
-Once installed, Claude Code will apply the discipline automatically when relevant.
+Once installed, Code Discipline applies automatically. Claude will surface assumptions before coding, stay within scope, and define verifiable success criteria for every task.
+
 You can also invoke it explicitly:
 
 > "Apply code-discipline to this task."
 > "Use the code-discipline principles for this review."
+
+---
+
+## Verify Installation
+
+Start a Claude Code session and ask:
+
+```
+What coding methodology are you following?
+```
+
+Claude should describe the four principles, the priority order, the mandatory review questions, and the prohibitions table.
 
 ---
 
@@ -119,20 +194,36 @@ Code Discipline is part of a three-skill suite — each owns a distinct layer:
 |---|---|---|
 | **[truth-serum](https://github.com/eliranpv11/claude-code-truth-serum-skill)** | Honesty & communication | You need Claude to report reality accurately |
 | **code-discipline** | Coding methodology | You need Claude to write code the right way |
-| **[autonomous-agent-protocol](https://github.com/eliranpv11/autonomous-agent-protocol)** | Execution framework | Claude runs without mid-task human approvals |
+| **[autonomous-agent-protocol](https://github.com/eliranpv11/autonomous-agent-protocol-skill)** | Execution framework | Claude runs without mid-task human approvals |
 
 Load all three for the complete stack. Load any one standalone — each works independently.
 
 ---
 
-## What's Inside
+## Compatibility
+
+- ✅ Claude Code (CLI)
+- ✅ Claude.ai (Web & Desktop)
+- ✅ Cursor IDE
+- ✅ Any agent supporting the Agent Skills open standard
+
+---
+
+## File Structure
 
 ```
-code-discipline/
-├── SKILL.md      ← Install as a Claude Code skill
-├── CLAUDE.md     ← Copy into any project's CLAUDE.md
-├── README.md     ← This file
-└── LICENSE       ← MIT
+code-discipline-skills/
+├── SKILL.md                        ← Install as a Claude Code skill
+├── CLAUDE.md                       ← Copy into any project's CLAUDE.md
+├── README.md                       ← This file
+├── EXAMPLES.md                     ← Real before/after examples
+├── LICENSE                         ← MIT
+├── .claude-plugin/
+│   ├── plugin.json                 ← Plugin metadata
+│   └── marketplace.json            ← Marketplace listing
+└── .cursor/
+    └── rules/
+        └── code-discipline.mdc     ← Cursor IDE rules (alwaysApply: true)
 ```
 
 ---
