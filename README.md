@@ -1,40 +1,36 @@
 # Code Discipline
 
-> A complete discipline for Claude Code that enforces six production-grade principles: structured thinking, surgical changes, goal-driven execution, truth-first reporting, and systematic problem resolution.
-
-English | [Install](#installation)
+> A coding methodology for Claude Code that enforces structured thinking, surgical changes, and verifiable success criteria.
 
 ---
 
 ## The Problem
 
-Left unconstrained, Claude Code exhibits predictable failure modes in production work:
+Left unconstrained, Claude Code exhibits predictable failure modes when writing code:
 
 - **Silent assumptions** — fills in missing information without flagging it, then runs with the wrong interpretation
 - **Overengineering** — reaches for abstraction, flexibility, and configurability that wasn't asked for
 - **Scope drift** — refactors adjacent code "while there", touches things unrelated to the task
-- **Aspirational reporting** — calls something "done" when it's partial, "passing" when tests aren't meaningful
-- **Point-fixes** — patches the symptom without mapping what depends on what
-- **Unauthorized commits** — proceeds to commit and push without waiting for explicit approval
+- **Weak success criteria** — marks tasks done without verifiable proof they work
+- **Point-fixes** — patches the symptom without understanding what the code depends on
 
 Code Discipline exists to eliminate all of them.
 
 ---
 
-## The Solution
+## What Code Discipline owns
 
-Six principles that work together as a complete working method:
+Code Discipline is a **coding methodology layer**. It controls:
 
-| # | Principle | What It Prevents |
-|---|---|---|
-| 1 | **Think Before Coding** | Silent assumptions, hidden confusion, unasked questions |
-| 2 | **Simplicity First** | Overengineering, speculative abstractions, bloated code |
-| 3 | **Surgical Changes** | Scope creep, unrelated refactors, "while I'm here" edits |
-| 4 | **Goal-Driven Execution** | Weak success criteria, untestable claims, vague completion |
-| 5 | **Truth First** | Aspirational status updates, unverified "done", hidden bad news |
-| 6 | **Systematic, Not Point-Fix** | Band-aids, unexplored dependencies, expanding silent scope |
+| Area | What it enforces |
+|---|---|
+| Before coding | Present assumptions, risks, options, and blast radius |
+| Code quality | Simplicity, modularity, no magic numbers, no silent failures |
+| Change scope | Touch only what the request requires — nothing adjacent |
+| Success criteria | Every task has a verifiable definition of done |
+| Priority order | Stability → Reliability → Readability → ... → Elegance |
 
-Plus operational rules: a prohibitions table, mandatory review questions, documentation standards, archival discipline, and a mistake-handling protocol.
+It does **not** own: honesty in reporting, commit gates, documentation standards, or mistake handling — those belong to **truth-serum**.
 
 ---
 
@@ -46,10 +42,29 @@ Plus operational rules: a prohibitions table, mandatory review questions, docume
 | Picks one solution without asking | Presents options when multiple exist |
 | Writes 300 lines for a 30-line problem | Asks: "Would a senior engineer say this is overcomplicated?" |
 | Refactors adjacent code "while there" | Touches only what the request requires |
-| Says "done" — but it's partial | Says "partial" — and explains what remains |
-| "Tests pass" with no output shown | Pastes actual test output as evidence |
-| Fixes the symptom, misses the cause | Maps dependencies before writing a line |
-| Commits without asking | Waits for explicit "commit now" |
+| No definition of done | Every task has a verifiable success criterion |
+| Tests that match mocks, not reality | Tests verified to assert real-world behavior |
+
+---
+
+## The Four Principles
+
+| # | Principle | What It Prevents |
+|---|---|---|
+| 1 | **Think Before Coding** | Silent assumptions, unasked questions, surprise blast radius |
+| 2 | **Simplicity First** | Overengineering, speculative abstractions, bloated code |
+| 3 | **Surgical Changes** | Scope creep, unrelated refactors, "while I'm here" edits |
+| 4 | **Goal-Driven Execution** | Weak success criteria, untestable claims, vague completion |
+
+Plus: a mandatory prohibitions table, mandatory review questions before each step, and a priority order for every technical decision.
+
+---
+
+## Priority Order
+
+When decisions conflict, this order applies:
+
+1. Stability → 2. Reliability → 3. Readability → 4. Maintainability → 5. Scalability → 6. Performance → 7. Elegance
 
 ---
 
@@ -65,13 +80,14 @@ claude mcp install code-discipline
 
 Upload `code-discipline.skill` via **Settings → Skills → Upload skill file**.
 
-### Option C — Personal install (available in all your projects)
+### Option C — Personal install (all your projects)
 
 ```bash
+mkdir -p ~/.claude/skills/code-discipline
 cp SKILL.md ~/.claude/skills/code-discipline/SKILL.md
 ```
 
-### Option D — Project install (shared with your team)
+### Option D — Project install (shared with team)
 
 ```bash
 mkdir -p .claude/skills/code-discipline
@@ -93,31 +109,19 @@ You can also invoke it explicitly:
 > "Apply code-discipline to this task."
 > "Use the code-discipline principles for this review."
 
-For the CLAUDE.md approach, the guidelines are always active for that project.
-
 ---
 
-## Principles at a Glance
+## The Skill Suite
 
-**1. Think Before Coding** — Surfaces assumptions, presents tradeoffs, maps blast radius before a single line is written. Stops when unclear instead of guessing forward.
+Code Discipline is part of a three-skill suite — each owns a distinct layer:
 
-**2. Simplicity First** — Delivers the minimum code that solves the problem. No speculative features, no over-abstraction, no clever constructs. Rewrites if the solution is longer than it needs to be.
+| Skill | Layer | Use when |
+|---|---|---|
+| **[truth-serum](https://github.com/eliranpv11/claude-code-truth-serum-skill)** | Honesty & communication | You need Claude to report reality accurately |
+| **code-discipline** | Coding methodology | You need Claude to write code the right way |
+| **[autonomous-agent-protocol](https://github.com/eliranpv11/autonomous-agent-protocol)** | Execution framework | Claude runs without mid-task human approvals |
 
-**3. Surgical Changes** — Touches only what the request requires. Matches existing style. Reports dead code without deleting it. Every changed line traces directly to the task.
-
-**4. Goal-Driven Execution** — Transforms every task into a verifiable goal. States a plan with explicit checkpoints for multi-step work. Never marks done without evidence.
-
-**5. Truth First** — Reports broken as broken, partial as partial, stubbed as stubbed. Every claim requires `file:line` and quoted code. "It should work" is not acceptable evidence.
-
-**6. Systematic, Not Point-Fix** — Maps what depends on X before fixing X. Documents newly discovered issues instead of silently expanding scope. No band-aids without expiry.
-
----
-
-## Priority Order
-
-When decisions conflict, this order applies:
-
-1. Stability → 2. Reliability → 3. Readability → 4. Maintainability → 5. Scalability → 6. Performance → 7. Elegance
+Load all three for the complete stack. Load any one standalone — each works independently.
 
 ---
 
@@ -130,18 +134,6 @@ code-discipline/
 ├── README.md     ← This file
 └── LICENSE       ← MIT
 ```
-
----
-
-## Related Skills
-
-- [**truth-serum**](https://github.com/EP-Media/claude-code-truth-serum-skill) — Focuses on institutional-grade truth-first reporting and evidence discipline for production systems.
-- [**autonomous-agent-protocol**](https://github.com/EP-Media/autonomous-agent-protocol) — A 6-phase auditable workflow with 7 safety checks for Claude Code agents running without mid-task human approvals.
-
-**How they fit together:**
-- Use `code-discipline` as your baseline for all development work.
-- Add `truth-serum` when you need stricter reporting and documentation standards.
-- Add `autonomous-agent-protocol` when running Claude Code in fully autonomous mode.
 
 ---
 
