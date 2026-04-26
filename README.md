@@ -8,17 +8,16 @@ English | [Install](#installation)
 
 ## The Problem
 
-From Andrej Karpathy's observations on LLM coding behavior:
+Left unconstrained, Claude Code exhibits predictable failure modes in production work:
 
-> "The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should."
+- **Silent assumptions** — fills in missing information without flagging it, then runs with the wrong interpretation
+- **Overengineering** — reaches for abstraction, flexibility, and configurability that wasn't asked for
+- **Scope drift** — refactors adjacent code "while there", touches things unrelated to the task
+- **Aspirational reporting** — calls something "done" when it's partial, "passing" when tests aren't meaningful
+- **Point-fixes** — patches the symptom without mapping what depends on what
+- **Unauthorized commits** — proceeds to commit and push without waiting for explicit approval
 
-> "They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do."
-
-Beyond overcomplication, production systems require more:
-
-> An LLM that calls something "done" when it isn't. That claims "tests pass" without showing output. That silently expands scope when one fix reveals three more problems. That commits without asking.
-
-**Code Discipline addresses all of it.**
+Code Discipline exists to eliminate all of them.
 
 ---
 
