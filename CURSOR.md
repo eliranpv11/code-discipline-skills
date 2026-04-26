@@ -123,6 +123,6 @@ If you change the four principles or any other content shared across surfaces, u
 | [`.cursor/rules/code-discipline.mdc`](.cursor/rules/code-discipline.mdc) | Cursor IDE rule |
 | [`skills/code-discipline/SKILL.md`](skills/code-discipline/SKILL.md) | Claude Code plugin / Claude.ai skill |
 
-The four principles, priority order, mandatory prohibitions, and review questions must be identical across all three. If you make a non-trivial change to one, update the other two before merging.
+The six principles, priority order, mandatory prohibitions, and review questions must be identical across all three. If you make a non-trivial change to one, update the other two before merging.
 
 The version numbers in `.claude-plugin/marketplace.json`, `.claude-plugin/plugin.json`, and `skills/code-discipline/SKILL.md` (`metadata.version`) must also match. Bump them together.

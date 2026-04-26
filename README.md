@@ -43,16 +43,18 @@ Code Discipline exists to eliminate all of them.
 
 ---
 
-## The Four Principles
+## The Six Principles
 
 | # | Principle | What It Prevents |
 |---|---|---|
 | 1 | **Think Before Coding** | Silent assumptions, unasked questions, surprise blast radius |
-| 2 | **Simplicity First** | Overengineering, speculative abstractions, bloated code |
-| 3 | **Surgical Changes** | Scope creep, unrelated refactors, "while I'm here" edits |
-| 4 | **Goal-Driven Execution** | Weak success criteria, untestable claims, vague completion |
+| 2 | **Verify Reality Before Acting** | Invented APIs, made-up imports, coding from memory instead of from the codebase |
+| 3 | **Simplicity First** | Overengineering, speculative abstractions, bloated code |
+| 4 | **Surgical Changes** | Scope creep, unrelated refactors, "while I'm here" edits |
+| 5 | **Respect Existing Contracts** | Silent breaking changes, forgotten consumers, undeclared schema and API churn |
+| 6 | **Goal-Driven Execution** | Weak success criteria, untestable claims, vague completion |
 
-Plus: a mandatory prohibitions table, mandatory review questions before each step, and a priority order for every technical decision.
+Plus: a mandatory prohibitions table (including no-fake-completion and no-dangerous-actions-without-approval), mandatory review questions before each step, and a priority order for every technical decision.
 
 ---
 

@@ -1,6 +1,6 @@
 # Examples
 
-Real-world before/after examples showing how each of the four principles applies in practice. The examples span four different languages — **Python**, **TypeScript**, **Go**, and **Rust** — to demonstrate that Code Discipline is fundamentally **language-agnostic**. The same failure modes and the same corrections apply identically across stacks.
+Real-world before/after examples showing how each of the six principles applies in practice. The examples span six different languages — **Python**, **Java**, **TypeScript**, **Go**, **C#**, and **Rust** — to demonstrate that Code Discipline is fundamentally **language-agnostic**. The same failure modes and the same corrections apply identically across stacks.
 
 For each principle: the bad version is what an unconstrained assistant will typically produce; the good version is what Code Discipline produces.
 
@@ -118,7 +118,90 @@ I will not start coding until you answer these.
 
 ---
 
-## 2. Simplicity First — Overengineering (TypeScript)
+## 2. Verify Reality Before Acting — Coding from Memory (Java)
+
+**User Request:** "Add a method to `UserService` that sends a password reset email to a given user."
+
+### ❌ Without Code Discipline
+
+The assistant writes the method without reading the relevant files first:
+
+```java
+package com.example.users;
+
+import com.example.email.EmailService;
+import com.example.tokens.TokenService;
+import java.util.Map;
+
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+
+    public void sendPasswordReset(String email) {
+        User user = userRepository.findByEmailAddress(email);
+        String resetToken = TokenService.generate();
+        emailService.send(
+            user.getEmail(),
+            "password-reset-template",
+            Map.of("token", resetToken)
+        );
+    }
+}
+```
+
+**Problems with this output:**
+
+| Problem | Reality |
+|---|---|
+| `userRepository.findByEmailAddress(email)` | The actual method is `findByEmail(String)` returning `Optional<User>`. `findByEmailAddress` does not exist. Compile error. |
+| `TokenService.generate()` (static) | The actual class is non-static and injected. The method is `tokenService.createResetToken(User user)`. |
+| `emailService.send(recipient, templateId, vars)` | The actual signature is `sendTemplate(EmailRequest request)` taking a builder object. The 3-argument form does not exist. |
+| Hardcoded `"password-reset-template"` | The actual template ID lives in `EmailTemplates.PASSWORD_RESET` — a constants class the team uses to avoid typos. |
+
+Each invented detail came from how a "typical" Spring/Java service usually looks — not from this codebase.
+
+### ✅ With Code Discipline
+
+```
+Before writing this method, I will verify the actual signatures involved.
+
+Files to read:
+1. UserRepository — what is the real method to look up a user by email?
+2. TokenService — instance or static? What is the method for a reset token?
+3. EmailService — what is the real signature for sending a templated email?
+4. Where do template identifiers live — magic strings or a constants class?
+
+[After reading UserRepository.java, TokenService.java, EmailService.java,
+ and EmailTemplates.java]
+
+Verified surface:
+- UserRepository.findByEmail(String email) → Optional<User>
+- TokenService is injected; createResetToken(User user) → String
+- EmailService.sendTemplate(EmailRequest request) — builder-based
+- Template IDs live in EmailTemplates (e.g. EmailTemplates.PASSWORD_RESET)
+
+Implementation matches the verified surface:
+
+  public void sendPasswordReset(String email) {
+      User user = userRepository.findByEmail(email)
+          .orElseThrow(() -> new UserNotFoundException(email));
+      String resetToken = tokenService.createResetToken(user);
+      emailService.sendTemplate(
+          EmailRequest.builder()
+              .to(user.getEmail())
+              .templateId(EmailTemplates.PASSWORD_RESET)
+              .variable("token", resetToken)
+              .build()
+      );
+  }
+```
+
+**Why this is correct:** Every API call in the final code traces to a method that actually exists in the codebase. No invention, no memory-based guessing. The code compiles the first time because every signature was verified before being called. The cost of reading four files up front is much smaller than the cost of debugging four different "method does not exist" errors after submission.
+
+---
+
+## 3. Simplicity First — Overengineering (TypeScript)
 
 **User Request:** "Add a function that formats a `Date` as `YYYY-MM-DD`."
 
@@ -222,7 +305,7 @@ For the bad version: yes, immediately. For the good version: no.
 
 ---
 
-## 3. Surgical Changes — The "While I'm Here" Refactor (Go)
+## 4. Surgical Changes — The "While I'm Here" Refactor (Go)
 
 **User Request:** "Fix the off-by-one error in `Sum` at `math.go:14`. The last element is being skipped."
 
@@ -316,7 +399,105 @@ done as a follow-up — I will not bundle them with this fix.
 
 ---
 
-## 4. Goal-Driven Execution — Weak Success Criteria (Rust)
+## 5. Respect Existing Contracts — Silent Breaking Changes (C#)
+
+**User Request:** "The field `customerId` in the `OrderResponse` should be `customer_id` to match our naming convention."
+
+### ❌ Without Code Discipline
+
+The assistant performs the rename:
+
+```csharp
+public class OrderResponse
+{
+    [JsonPropertyName("customer_id")]   // was "customerId"
+    public string CustomerId { get; set; }
+
+    [JsonPropertyName("orderTotal")]
+    public decimal OrderTotal { get; set; }
+
+    // ... other fields
+}
+```
+
+The diff is small. The diff looks clean. Tests in this project still pass. The pull request merges.
+
+**Problems with this output:**
+
+The `customerId` field is part of a **public contract** serialized into the API response. It is consumed by:
+
+| Consumer | What breaks after the rename |
+|---|---|
+| iOS mobile app | Parses `customerId` from the response. Every order page on iOS shows a missing customer after the next deploy. |
+| Android mobile app | Same. |
+| Web dashboard | Filters and groups orders by `customerId`. The filter silently breaks. |
+| Two partner integrations | Their webhook receivers expect `customerId`. They begin logging parse errors. |
+| Analytics pipeline | Loads orders into a data warehouse. The schema check fails on the next nightly run. |
+
+The code change took thirty seconds. The cleanup will take weeks.
+
+### ✅ With Code Discipline
+
+```
+Before changing this, I need to surface the contract impact.
+
+The field `customerId` in OrderResponse is serialized into the public API
+response. Searching for consumers:
+
+  - rg "customerId" --type=swift     → iOS app: 4 call sites
+  - rg "customerId" --type=kotlin    → Android app: 3 call sites
+  - rg "customerId" web/             → Dashboard: 7 call sites
+  - rg "customerId" partners/docs/   → Documented in 2 partner integration guides
+
+At least 14 known consumers, plus undocumented partners.
+
+A silent rename will break all of them on the next deploy.
+
+Three options, in order of risk:
+
+A. Additive: emit BOTH "customerId" (existing) and "customer_id" (new).
+   Document "customerId" as deprecated. Give consumers a defined
+   migration window. Remove "customerId" in a planned release.
+   → Zero immediate breakage. Clear migration path.
+
+B. Coordinated rename: open tickets with iOS, Android, web, and partners
+   to update on the same day. Deploy in lockstep.
+   → Faster but requires cross-team coordination. Partners may not be
+     reachable in time.
+
+C. Hold the convention for new fields only: leave existing fields alone,
+   apply snake_case only to fields added from now on.
+   → No migration cost. Trades naming consistency for stability.
+
+Which path do you want? I will not perform a silent rename.
+```
+
+If the user picks **A**, the implementation surfaces both names without breaking existing consumers:
+
+```csharp
+public class OrderResponse
+{
+    // Existing — kept for backwards compatibility.
+    // Deprecated; planned for removal after a defined migration window.
+    [JsonPropertyName("customerId")]
+    public string CustomerId { get; set; }
+
+    // New — aligned with naming convention.
+    [JsonPropertyName("customer_id")]
+    public string CustomerIdSnakeCase => CustomerId;
+
+    [JsonPropertyName("orderTotal")]
+    public decimal OrderTotal { get; set; }
+}
+```
+
+Plus an entry in the API changelog and a deprecation notice in the public API documentation.
+
+**Why this is correct:** The change names the consumers, names the impact, presents the options, and lets the human pick the tradeoff. The rename never happens silently. When it does happen, it is additive — old consumers keep working, new consumers can adopt the new name, and the deprecation path is documented and dated.
+
+---
+
+## 6. Goal-Driven Execution — Weak Success Criteria (Rust)
 
 **User Request:** "The test suite is failing. Make the tests pass."
 
@@ -419,8 +600,10 @@ Shall I proceed with this fix?
 | Principle | Anti-Pattern | Code Discipline Response |
 |---|---|---|
 | Think Before Coding | Silently picks one interpretation, writes 200 lines | Names all assumptions, presents options, asks before coding |
+| Verify Reality Before Acting | Calls invented functions, imports paths that don't exist, codes from memory | Reads the actual files first; every call site traced to a verified source before writing |
 | Simplicity First | Adds caching, abstractions, configurability nobody asked for | Writes the smallest code that satisfies the request |
 | Surgical Changes | Renames, reformats, refactors "while there" | Changes only the lines the request requires; surfaces other observations as separate items |
+| Respect Existing Contracts | Renames a field, drops a flag, restructures a payload silently | Identifies consumers, surfaces impact, prefers additive change over breaking change |
 | Goal-Driven Execution | Deletes failing tests or mocks them away | Reproduces the failure against real code, fixes the real cause, verifies with the real test |
 
 ---
@@ -430,8 +613,10 @@ Shall I proceed with this fix?
 The "without" examples are not obviously wrong. Each one looks reasonable in isolation:
 
 - The Python example uses real authentication patterns.
+- The Java example uses real Spring/repository conventions and looks like ordinary service-layer code.
 - The TypeScript example uses real software-engineering principles (composition, configurability, caching).
 - The Go example follows real Go idioms (`range`, doc comments, guard clauses).
+- The C# example follows real ASP.NET / `System.Text.Json` serialization conventions.
 - The Rust example uses real test infrastructure.
 
 The problem is **timing**: each one adds correctness or flexibility **before it is needed**. That added complexity:

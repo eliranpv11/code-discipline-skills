@@ -44,7 +44,22 @@ Rules:
 
 ---
 
-## 2. Simplicity First
+## 2. Verify Reality Before Acting
+
+**Don't code from memory. The codebase is the source of truth.**
+
+Before writing or changing code:
+- Read the actual files involved. Don't work from a remembered shape.
+- Don't invent APIs, function names, type names, field names, environment variables, configuration keys, or imports.
+- Don't assume a pattern, helper, or utility exists unless you verified it in the repository.
+- Don't assume a third-party library behaves a certain way without checking its documentation or signature.
+- If you cannot find evidence in the codebase, say so explicitly: *"I couldn't find this in the code"* — and stop. Do not fill the gap from memory.
+
+**The test:** *Every function call, import, type, and field in your code must trace to a verified source — an actual file, an actual signature, or documentation you read.*
+
+---
+
+## 3. Simplicity First
 
 **Minimum code that solves the problem. Nothing speculative.**
 
@@ -61,7 +76,7 @@ Ask: *"Would a senior engineer say this is overcomplicated?"* If yes, simplify.
 
 ---
 
-## 3. Surgical Changes
+## 4. Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
 
@@ -90,7 +105,31 @@ BEFORE COMMIT — Get explicit approval. Show exactly what's being committed. No
 
 ---
 
-## 4. Goal-Driven Execution
+## 5. Respect Existing Contracts
+
+**Public surfaces are commitments. Treat them as such.**
+
+Before changing behavior, identify the contracts your change touches. Contracts include:
+- Function and method signatures (parameters, return types, thrown errors)
+- API request and response shapes
+- Database schemas and column types
+- Event names and payloads
+- CLI flags and command names
+- Configuration keys and environment variables
+- Error codes and error formats
+- File formats your code reads or writes
+
+Rules:
+- Don't change a contract silently. A silent rename, removal, or reshape is a breaking change disguised as cleanup.
+- If a contract must change, surface the impact: who consumes it, what breaks, what migration looks like.
+- Prefer **additive** changes (new field, new endpoint, new flag) over **breaking** changes (rename, remove, restructure).
+- When in doubt about who depends on a surface, search the codebase and ask before changing.
+
+**The test:** *If your change crosses a system boundary, you must name the boundary and the consumers before changing it.*
+
+---
+
+## 6. Goal-Driven Execution
 
 **Define success criteria. Loop until verified.**
 
@@ -122,6 +161,8 @@ Testing principles:
 | ❌ No unrequested features | No "we could also" implemented. Any addition requires explicit approval. |
 | ❌ No broad refactors | Change only what was requested. No "while I'm here" modifications. |
 | ❌ No band-aids | No temporary values without expiry. No hardcoded test values in production. No silent error swallowing. |
+| ❌ No fake completion | Never claim "done" without verification. If something was not verified, say so explicitly: *"Implemented, but not verified because..."* |
+| ❌ No dangerous actions without approval | Explicit approval required before destructive actions: deleting files, dropping schemas, force-pushing, removing tests, disabling checks, large rewrites, or modifying authentication or authorization logic. |
 | ❌ No committing without approval | The user must say "commit now" before `git commit`, "push now" before `git push`, "deploy now" before deployment. |
 
 ---
@@ -144,4 +185,4 @@ Weak criteria ("make it work") require constant clarification.
 
 ---
 
-**These guidelines are working if:** changes are smaller and more focused, no unrequested features appear in diffs, and every task has a verifiable definition of done before work begins.
+**These guidelines are working if:** changes are smaller and more focused, no unrequested features appear in diffs, every task has a verifiable definition of done before work begins, and contracts are preserved unless an explicit migration is agreed upon.
