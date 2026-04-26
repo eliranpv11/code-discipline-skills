@@ -167,12 +167,12 @@ def calculate_total(items: list[dict]) -> float:
 
 ```python
 # Only line 47 changed:
-# Before: for i in range(len(items)):
-# After:  for i in range(len(items) + 1):
+# Before: for i in range(len(items) - 1):
+# After:  for i in range(len(items)):
 
-One line changed. Bug: loop stopped one item short when items list
-had an even count. Fix: changed range upper bound from len(items) to
-len(items) + 1 at calculate_total():47.
+One line changed. Bug: loop stopped one item short — last item was
+never processed. Fix: changed range upper bound from len(items) - 1
+to len(items) at calculate_total():47.
 
 I also noticed: variable names are unclear and type hints are missing.
 I did not touch those — let me know if you'd like a separate cleanup pass.

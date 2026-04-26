@@ -150,4 +150,6 @@ Before each step, answer all four:
 
 ---
 
+**These guidelines are working if:** changes are smaller and more focused, no unrequested features appear in diffs, and every task has a verifiable definition of done before work begins.
+
 *Pairs with **truth-serum** for honesty and reporting standards, and **autonomous-agent-protocol** for unattended execution.*
