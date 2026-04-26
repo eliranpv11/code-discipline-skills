@@ -1,12 +1,12 @@
 # Code Discipline
 
-> *A coding methodology for Claude Code that enforces structured thinking, surgical changes, and verifiable success criteria.*
+> *A coding methodology for production systems that enforces structured thinking, surgical changes, and verifiable success criteria.*
 
 ---
 
 ## The Problem
 
-Left unconstrained, Claude Code exhibits predictable failure modes when writing code:
+Left unconstrained, AI coding assistants exhibit predictable failure modes:
 
 - **Silent assumptions** — fills in missing information without flagging it, then runs with the wrong interpretation
 - **Overengineering** — reaches for abstraction, flexibility, and configurability that wasn't asked for
@@ -18,9 +18,7 @@ Code Discipline exists to eliminate all of them.
 
 ---
 
-## What Code Discipline owns
-
-Code Discipline is a **coding methodology layer**. It controls:
+## What Code Discipline Enforces
 
 | Area | What it enforces |
 |---|---|
@@ -29,8 +27,6 @@ Code Discipline is a **coding methodology layer**. It controls:
 | Change scope | Touch only what the request requires — nothing adjacent |
 | Success criteria | Every task has a verifiable definition of done |
 | Priority order | Stability → Reliability → Readability → ... → Elegance |
-
-It does **not** own: honesty in reporting, documentation standards, or mistake handling — those belong to **truth-serum**.
 
 ---
 
@@ -72,6 +68,14 @@ When decisions conflict, this order applies:
 6. Performance
 7. Elegance
 
+The goal is not "it works" — it is "it works correctly and reliably one year from now."
+
+---
+
+## Universality
+
+Code Discipline is **language-agnostic**. The four principles apply equally to Python, TypeScript, Go, Rust, Java, C#, C++, and any other language. See [`EXAMPLES.md`](EXAMPLES.md) for real-world before/after examples across multiple languages.
+
 ---
 
 ## Installation
@@ -93,7 +97,7 @@ The skill is installed globally across all your Claude Code sessions immediately
 
 1. Go to **claude.ai → Customize → Skills**
 2. Click **+** → **Create skill**
-3. Paste the contents of [`SKILL.md`](./plugins/code-discipline/SKILL.md) into the skill editor
+3. Paste the contents of [`SKILL.md`](./skills/code-discipline/SKILL.md) into the skill editor
 4. Name it `code-discipline` and save
 5. Toggle it on ✅
 
@@ -132,14 +136,14 @@ Download just the skill file directly:
 ```bash
 mkdir -p ~/.claude/skills/code-discipline && \
   curl -o ~/.claude/skills/code-discipline/SKILL.md \
-  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/plugins/code-discipline/SKILL.md
+  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/skills/code-discipline/SKILL.md
 ```
 
 ---
 
 ### Option F — CLAUDE.md paste (zero-install, works everywhere)
 
-The `CLAUDE.md` file contains the complete skill content without YAML frontmatter — ready to paste directly into any project.
+The `CLAUDE.md` file contains the complete methodology without YAML frontmatter — ready to paste directly into any project.
 
 1. Copy the contents of [`CLAUDE.md`](./CLAUDE.md)
 2. Paste into your project's `CLAUDE.md` file (merge with existing content if needed)
@@ -150,22 +154,15 @@ This approach requires no installation and works in any environment that reads `
 
 ### Option G — Cursor IDE
 
-1. Copy [`.cursor/rules/code-discipline.mdc`](./.cursor/rules/code-discipline.mdc) to your project's `.cursor/rules/` directory
-2. Cursor will apply the rule automatically on every request (`alwaysApply: true`)
+A committed Cursor project rule (`.cursor/rules/code-discipline.mdc`) applies the methodology automatically when you open this repository in Cursor (`alwaysApply: true`).
 
-Or install manually:
-
-```bash
-mkdir -p .cursor/rules
-curl -o .cursor/rules/code-discipline.mdc \
-  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/.cursor/rules/code-discipline.mdc
-```
+To use the same rule in another project, see [`CURSOR.md`](CURSOR.md) for full setup, troubleshooting, and how the Cursor rule relates to the Claude Code plugin.
 
 ---
 
 ## How to Use
 
-Once installed, Code Discipline applies automatically. Claude will surface assumptions before coding, stay within scope, and define verifiable success criteria for every task.
+Once installed, Code Discipline applies automatically. The four principles surface assumptions before coding, keep changes within scope, and define verifiable success criteria for every task.
 
 You can also invoke it explicitly:
 
@@ -182,21 +179,7 @@ Start a Claude Code session and ask:
 What coding methodology are you following?
 ```
 
-Claude should describe the four principles, the priority order, the mandatory review questions, and the prohibitions table.
-
----
-
-## The Skill Suite
-
-Code Discipline is part of a three-skill suite — each owns a distinct layer:
-
-| Skill | Layer | Use when |
-|---|---|---|
-| **[truth-serum](https://github.com/eliranpv11/claude-code-truth-serum-skill)** | Honesty & communication | You need Claude to report reality accurately |
-| **code-discipline** | Coding methodology | You need Claude to write code the right way |
-| **[autonomous-agent-protocol](https://github.com/eliranpv11/autonomous-agent-protocol-skill)** | Execution framework | Claude runs without mid-task human approvals |
-
-Load all three for the complete stack. Load any one standalone — each works independently.
+The response should describe the four principles, the priority order, the mandatory review questions, and the prohibitions table.
 
 ---
 
@@ -213,21 +196,29 @@ Load all three for the complete stack. Load any one standalone — each works in
 
 ```
 code-discipline-skills/
-├── CLAUDE.md                                    ← Copy into any project's CLAUDE.md
-├── README.md                                    ← This file
-├── EXAMPLES.md                                  ← Real before/after examples
-├── LICENSE                                      ← MIT
+├── CLAUDE.md                              ← Copy into any project's CLAUDE.md
+├── README.md                              ← This file
+├── CURSOR.md                              ← Cursor IDE usage and setup
+├── EXAMPLES.md                            ← Real before/after examples
+├── LICENSE                                ← MIT
 ├── .claude-plugin/
-│   └── marketplace.json                         ← Marketplace listing
-├── plugins/
+│   ├── marketplace.json                   ← Marketplace listing
+│   └── plugin.json                        ← Plugin manifest
+├── skills/
 │   └── code-discipline/
-│       ├── SKILL.md                             ← Install as a Claude Code skill
-│       └── .claude-plugin/
-│           └── plugin.json                      ← Plugin metadata
+│       └── SKILL.md                       ← The skill itself
 └── .cursor/
     └── rules/
-        └── code-discipline.mdc                  ← Cursor IDE rules (alwaysApply: true)
+        └── code-discipline.mdc            ← Cursor IDE rule (alwaysApply: true)
 ```
+
+---
+
+## Tradeoff
+
+This methodology biases toward **correctness and simplicity over speed and cleverness**. For throwaway scripts and one-off prototypes, apply judgment — not every change needs the full rigor.
+
+The goal is reducing costly mistakes on production work, not slowing down trivial tasks.
 
 ---
 

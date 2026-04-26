@@ -145,5 +145,3 @@ Weak criteria ("make it work") require constant clarification.
 ---
 
 **These guidelines are working if:** changes are smaller and more focused, no unrequested features appear in diffs, and every task has a verifiable definition of done before work begins.
-
-*Designed to pair with companion skills `truth-serum` (honesty & reporting) and `autonomous-agent-protocol` (unattended execution), available as separate installations. This skill works standalone and does not require them.*
