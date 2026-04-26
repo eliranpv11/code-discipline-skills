@@ -162,6 +162,21 @@ To use the same rule in another project, see [`CURSOR.md`](CURSOR.md) for full s
 
 ---
 
+### Option H — Codex CLI
+
+A Codex-compatible skill is bundled at [`skills/code-discipline`](skills/code-discipline), including [`agents/openai.yaml`](skills/code-discipline/agents/openai.yaml) for Codex UI metadata and invocation policy.
+
+Install it into the Codex skills directory:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R skills/code-discipline ~/.codex/skills/
+```
+
+Restart Codex, then invoke the skill explicitly with `$code-discipline` or let Codex load it implicitly when the task fits. See [`CODEX.md`](CODEX.md) for full setup, configuration, and troubleshooting.
+
+---
+
 ## How to Use
 
 Once installed, Code Discipline applies automatically. The four principles surface assumptions before coding, keep changes within scope, and define verifiable success criteria for every task.
@@ -190,6 +205,7 @@ The response should describe the four principles, the priority order, the mandat
 - ✅ Claude Code (CLI)
 - ✅ Claude.ai (Web & Desktop)
 - ✅ Cursor IDE
+- ✅ Codex CLI
 - ✅ Any agent supporting the Agent Skills open standard
 
 ---
@@ -201,6 +217,7 @@ code-discipline-skills/
 ├── CLAUDE.md                              ← Copy into any project's CLAUDE.md
 ├── README.md                              ← This file
 ├── CURSOR.md                              ← Cursor IDE usage and setup
+├── CODEX.md                               ← Codex CLI usage and setup
 ├── EXAMPLES.md                            ← Real before/after examples
 ├── LICENSE                                ← MIT
 ├── .claude-plugin/
@@ -208,7 +225,9 @@ code-discipline-skills/
 │   └── plugin.json                        ← Plugin manifest
 ├── skills/
 │   └── code-discipline/
-│       └── SKILL.md                       ← The skill itself
+│       ├── SKILL.md                       ← The skill itself
+│       └── agents/
+│           └── openai.yaml                ← Codex CLI metadata
 └── .cursor/
     └── rules/
         └── code-discipline.mdc            ← Cursor IDE rule (alwaysApply: true)

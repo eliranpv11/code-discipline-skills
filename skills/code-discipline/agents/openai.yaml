@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Discipline"
+  short_description: "Production-grade coding methodology: think before coding, verify reality, simplicity, surgical changes, contract awareness, verifiable success."
+  default_prompt: "Apply $code-discipline to this task. Surface assumptions and tradeoffs before coding, verify every API and import against the actual codebase, keep changes surgical, respect existing contracts, and define verifiable success criteria before implementing."
+policy:
+  allow_implicit_invocation: true

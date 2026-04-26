@@ -115,14 +115,15 @@ If you want Cursor to load the rule **only when explicitly invoked** (instead of
 
 ## For Contributors
 
-If you change the four principles or any other content shared across surfaces, update **all** of the following so they stay in sync:
+If you change the six principles or any other content shared across surfaces, update **all** of the following so they stay in sync:
 
 | File | Purpose |
 |---|---|
 | [`CLAUDE.md`](CLAUDE.md) | Zero-install, paste-into-any-project version |
 | [`.cursor/rules/code-discipline.mdc`](.cursor/rules/code-discipline.mdc) | Cursor IDE rule |
-| [`skills/code-discipline/SKILL.md`](skills/code-discipline/SKILL.md) | Claude Code plugin / Claude.ai skill |
+| [`skills/code-discipline/SKILL.md`](skills/code-discipline/SKILL.md) | Claude Code plugin / Claude.ai / Codex skill body |
+| [`skills/code-discipline/agents/openai.yaml`](skills/code-discipline/agents/openai.yaml) | Codex-specific UI metadata and invocation policy |
 
-The six principles, priority order, mandatory prohibitions, and review questions must be identical across all three. If you make a non-trivial change to one, update the other two before merging.
+The six principles, priority order, mandatory prohibitions, and review questions must be identical across the first three files. The `openai.yaml` does not duplicate the methodology — it carries Codex-specific fields only — but its `default_prompt` should reflect the principles accurately. If you add or remove a principle, update the prompt accordingly.
 
 The version numbers in `.claude-plugin/marketplace.json`, `.claude-plugin/plugin.json`, and `skills/code-discipline/SKILL.md` (`metadata.version`) must also match. Bump them together.
