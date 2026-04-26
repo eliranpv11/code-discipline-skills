@@ -1,6 +1,7 @@
 # Code Discipline
 
-> *A coding methodology for production systems that enforces structured thinking, surgical changes, and verifiable success criteria.*
+> *Stop your AI from overengineering, making silent assumptions, and touching code it wasn't asked to touch.
+Six principles + mandatory prohibitions for production-grade AI-assisted coding. Works with Claude Code, Cursor, and Codex.*
 
 ---
 
