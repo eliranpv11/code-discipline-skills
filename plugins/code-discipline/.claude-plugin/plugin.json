@@ -1,9 +1,9 @@
 {
   "name": "code-discipline",
   "description": "Coding methodology for production-grade software development. Enforces structured thinking before coding, surgical changes, simplicity, and verifiable success criteria.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
-    "name": "eliranpv11"
+    "name": "EP Media"
   },
   "license": "MIT",
   "keywords": ["coding", "methodology", "production", "simplicity", "discipline", "best-practices"],

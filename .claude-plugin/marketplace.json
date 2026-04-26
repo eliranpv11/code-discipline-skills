@@ -1,23 +1,22 @@
 {
   "name": "code-discipline",
-  "id": "code-discipline",
   "owner": {
-    "name": "eliranpv11"
+    "name": "EP Media"
   },
   "metadata": {
     "description": "Stop Claude from overengineering, making silent assumptions, and touching code it wasn't asked to touch. A complete coding methodology for production systems.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "code-discipline",
-      "source": "./",
+      "source": "./plugins/code-discipline",
       "description": "Think before coding, simplicity first, surgical changes, goal-driven execution. Four principles with mandatory review questions and a prohibited-actions table.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
-        "name": "eliranpv11"
+        "name": "EP Media"
       },
-      "keywords": ["coding", "methodology", "production", "simplicity", "discipline", "best-practices"],
+      "tags": ["coding", "methodology", "production", "simplicity", "discipline", "best-practices"],
       "category": "workflow"
     }
   ]

@@ -93,7 +93,7 @@ The skill is installed globally across all your Claude Code sessions immediately
 
 1. Go to **claude.ai → Customize → Skills**
 2. Click **+** → **Create skill**
-3. Paste the contents of [`SKILL.md`](./SKILL.md) into the skill editor
+3. Paste the contents of [`SKILL.md`](./plugins/code-discipline/SKILL.md) into the skill editor
 4. Name it `code-discipline` and save
 5. Toggle it on ✅
 
@@ -132,7 +132,7 @@ Download just the skill file directly:
 ```bash
 mkdir -p ~/.claude/skills/code-discipline && \
   curl -o ~/.claude/skills/code-discipline/SKILL.md \
-  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/SKILL.md
+  https://raw.githubusercontent.com/eliranpv11/code-discipline-skills/main/plugins/code-discipline/SKILL.md
 ```
 
 ---
@@ -213,17 +213,20 @@ Load all three for the complete stack. Load any one standalone — each works in
 
 ```
 code-discipline-skills/
-├── SKILL.md                        ← Install as a Claude Code skill
-├── CLAUDE.md                       ← Copy into any project's CLAUDE.md
-├── README.md                       ← This file
-├── EXAMPLES.md                     ← Real before/after examples
-├── LICENSE                         ← MIT
+├── CLAUDE.md                                    ← Copy into any project's CLAUDE.md
+├── README.md                                    ← This file
+├── EXAMPLES.md                                  ← Real before/after examples
+├── LICENSE                                      ← MIT
 ├── .claude-plugin/
-│   ├── plugin.json                 ← Plugin metadata
-│   └── marketplace.json            ← Marketplace listing
+│   └── marketplace.json                         ← Marketplace listing
+├── plugins/
+│   └── code-discipline/
+│       ├── SKILL.md                             ← Install as a Claude Code skill
+│       └── .claude-plugin/
+│           └── plugin.json                      ← Plugin metadata
 └── .cursor/
     └── rules/
-        └── code-discipline.mdc     ← Cursor IDE rules (alwaysApply: true)
+        └── code-discipline.mdc                  ← Cursor IDE rules (alwaysApply: true)
 ```
 
 ---

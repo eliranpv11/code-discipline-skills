@@ -1,11 +1,9 @@
 ---
 name: code-discipline
-description: >
-  Coding methodology for production-grade software development. Enforces
-  structured thinking before coding, surgical changes, simplicity, and
-  verifiable success criteria. Use when writing, reviewing, or refactoring
-  any code that must remain correct and maintainable past initial delivery.
+description: Coding methodology for production-grade software development. Enforces structured thinking before coding, surgical changes, simplicity, and verifiable success criteria. Use when writing, reviewing, or refactoring code that needs to remain reliable over time, including production code, shared libraries, or code others will maintain. Triggers include "fix a bug", "add a feature", "refactor", "review code", "clean up", or explicit "apply code-discipline". Do NOT use for throwaway scripts, one-off prototypes, or quick demos.
 license: MIT
+metadata:
+  version: 1.1.0
 ---
 
 # Code Discipline
@@ -152,4 +150,4 @@ Before each step, answer all four:
 
 **These guidelines are working if:** changes are smaller and more focused, no unrequested features appear in diffs, and every task has a verifiable definition of done before work begins.
 
-*Pairs with **truth-serum** for honesty and reporting standards, and **autonomous-agent-protocol** for unattended execution.*
+*Designed to pair with companion skills `truth-serum` (honesty & reporting) and `autonomous-agent-protocol` (unattended execution), available as separate installations. This skill works standalone and does not require them.*
