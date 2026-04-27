@@ -151,6 +151,9 @@ Testing principles:
 - A passing suite means the tests *think* it works — verify they test the right thing
 - State certainty level explicitly when uncertain about an API or behavior
 
+Strong success criteria let you work independently.
+Weak criteria ("make it work") require constant clarification.
+
 ---
 
 ## Mandatory Prohibitions
@@ -177,11 +180,6 @@ Before each step, answer all four:
 4. Would this pass code review at a top-tier engineering organization?
 
 **Only if all four answers are positive — proceed.**
-
----
-
-Strong success criteria let you work independently.
-Weak criteria ("make it work") require constant clarification.
 
 ---
 

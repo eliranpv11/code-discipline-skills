@@ -1,6 +1,7 @@
 # Code Discipline
 
-> *A coding methodology for production systems that enforces structured thinking, surgical changes, and verifiable success criteria.*
+> *Stop your AI from overengineering, making silent assumptions, and touching code it wasn't asked to touch.
+Six principles + mandatory prohibitions for production-grade AI-assisted coding. Works with Claude Code, Cursor, and Codex.*
 
 ---
 
@@ -76,7 +77,7 @@ The goal is not "it works" — it is "it works correctly and reliably one year f
 
 ## Universality
 
-Code Discipline is **language-agnostic**. The four principles apply equally to Python, TypeScript, Go, Rust, Java, C#, C++, and any other language. See [`EXAMPLES.md`](EXAMPLES.md) for real-world before/after examples across multiple languages.
+Code Discipline is **language-agnostic**. The six principles apply equally to Python, TypeScript, Go, Rust, Java, C#, C++, and any other language. See [`EXAMPLES.md`](EXAMPLES.md) for real-world before/after examples across multiple languages.
 
 ---
 
@@ -179,7 +180,7 @@ Restart Codex, then invoke the skill explicitly with `$code-discipline` or let C
 
 ## How to Use
 
-Once installed, Code Discipline applies automatically. The four principles surface assumptions before coding, keep changes within scope, and define verifiable success criteria for every task.
+Once installed, Code Discipline applies automatically. The six principles surface assumptions before coding, verify against the actual codebase, keep changes within scope, respect existing contracts, and define verifiable success criteria for every task.
 
 You can also invoke it explicitly:
 
@@ -190,13 +191,13 @@ You can also invoke it explicitly:
 
 ## Verify Installation
 
-Start a Claude Code session and ask:
+Start a Claude Code session and apply the skill to a real task:
 
 ```
-What coding methodology are you following?
+Apply code-discipline to refactor the function in src/utils.js
 ```
 
-The response should describe the four principles, the priority order, the mandatory review questions, and the prohibitions table.
+The response should surface assumptions before writing any code, present options when multiple interpretations exist, and reference the principles or the priority order when relevant — rather than jumping directly into implementation. If it does, the skill is loaded and active.
 
 ---
 
