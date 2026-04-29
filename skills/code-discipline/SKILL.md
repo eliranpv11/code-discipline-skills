@@ -3,7 +3,7 @@ name: code-discipline
 description: Coding methodology for production-grade software development. Enforces structured thinking before coding, verifying reality, simplicity, surgical changes, contract awareness, and verifiable success criteria. Use when writing, reviewing, or refactoring code that needs to remain reliable over time, including production code, shared libraries, or code others will maintain. Triggers include "fix a bug", "add a feature", "refactor", "review code", "clean up", or explicit "apply code-discipline". Do NOT use for throwaway scripts, one-off prototypes, or quick demos.
 license: MIT
 metadata:
-  version: 1.4.2
+  version: 1.4.3
 ---
 
 # Code Discipline
@@ -62,6 +62,8 @@ Before writing or changing code:
 - If you cannot find evidence in the codebase, say so explicitly: *"I couldn't find this in the code"* — and stop. Do not fill the gap from memory.
 
 **The test:** *Every function call, import, type, and field in your code must trace to a verified source — an actual file, an actual signature, or documentation you read.*
+
+**Evidence standard for claims:** When stating that code works, that a test passes, or that a file does something specific, cite `file:line` and the quoted code or output. Paste actual command output rather than summarizing it. *"It should work"* and *"I believe"* are not evidence.
 
 ---
 
@@ -151,6 +153,8 @@ For multi-step tasks, state a plan:
 3. [Step] → verify: [check]
 ```
 
+**Checkpoint between steps:** Complete and verify each step before starting the next. Do not chain steps without confirming the previous one succeeded. Catching divergence at step 2 is much cheaper than catching it at step 5.
+
 Testing principles:
 - Every change must include tests, or a clear explanation of why not
 - Tests must verify real behavior — not just match mocks
@@ -170,6 +174,7 @@ Weak criteria ("make it work") require constant clarification.
 | ❌ No unrequested features | No "we could also" implemented. Any addition requires explicit approval. |
 | ❌ No broad refactors | Change only what was requested. No "while I'm here" modifications. |
 | ❌ No band-aids | No temporary values without expiry. No hardcoded test values in production. No silent error swallowing. |
+| ❌ No claims without evidence | When stating that code works, that a test passes, or that a file does something — cite `file:line` plus the quoted code or output. Paste actual command output, do not summarize it. *"It should work"* is not evidence. |
 | ❌ No fake completion | Never claim "done" without verification. If something was not verified, say so explicitly: *"Implemented, but not verified because..."* |
 | ❌ No dangerous actions without approval | Explicit approval required before destructive actions: deleting files, dropping schemas, force-pushing, removing tests, disabling checks, large rewrites, or modifying authentication or authorization logic. |
 | ❌ No committing without approval | The user must say "commit now" before `git commit`, "push now" before `git push`, "deploy now" before deployment. |

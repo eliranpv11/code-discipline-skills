@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Stop overengineering, silent assumptions, and code touching what wasn't asked. A coding methodology for production systems.",
-    "version": "1.4.2"
+    "version": "1.4.3"
   },
   "plugins": [
     {
       "name": "code-discipline",
       "source": "./",
       "description": "Think before coding, verify reality, simplicity first, surgical changes, respect existing contracts, goal-driven execution. Six principles with mandatory review questions and a prohibitions table.",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "keywords": ["coding", "methodology", "production", "simplicity", "discipline", "best-practices"],
       "category": "workflow"
     }
