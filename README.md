@@ -201,6 +201,74 @@ The response should surface assumptions before writing any code, present options
 
 ---
 
+## Updating to a New Version
+
+When a new release is published, update via Claude Code's built-in plugin manager:
+
+1. In Claude Code, run `/plugins`
+2. Switch to the **Installed** tab
+3. Select **`code-discipline @ code-discipline`** (press Enter to open details)
+4. Choose **"Update now"**
+5. Close Claude Code completely and reopen — discovery runs at startup
+
+The new version is active across all your sessions.
+
+### Verify the update
+
+Run `/plugins` again, select the plugin, and check the **Version** field — it should match the [latest release](https://github.com/eliranpv11/code-discipline-skills/releases).
+
+### Fallback — force a clean reinstall
+
+If `Update now` does not pick up the new version (rare, e.g. when the local cache is wedged), do a manual reset:
+
+**Windows (PowerShell):**
+
+```powershell
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\cache\code-discipline"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\plugins\marketplaces\eliranpv11-code-discipline-skills*"
+```
+
+**macOS / Linux:**
+
+```bash
+rm -rf ~/.claude/plugins/cache/code-discipline
+rm -rf ~/.claude/plugins/marketplaces/eliranpv11-code-discipline-skills*
+```
+
+Then in Claude Code:
+
+```
+/plugin marketplace add eliranpv11/code-discipline-skills
+/plugin install code-discipline@code-discipline
+```
+
+Close Claude Code completely and reopen.
+
+### Cursor IDE updates
+
+The `.cursor/rules/code-discipline.mdc` file is committed to your project — pull the latest to get the new version:
+
+```bash
+git pull
+```
+
+If you copied the rule into another project manually, repeat the copy step from [Option G](#option-g--cursor-ide).
+
+### Codex CLI updates
+
+If you installed by copy:
+
+```bash
+rm -rf ~/.codex/skills/code-discipline
+cp -R skills/code-discipline ~/.codex/skills/
+```
+
+If you installed by symlink, the update happens automatically when you `git pull` this repository.
+
+Restart Codex to pick up the new skill body.
+
+---
+
 ## Compatibility
 
 - ✅ Claude Code (CLI)
