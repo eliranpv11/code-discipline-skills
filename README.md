@@ -284,6 +284,7 @@ Restart Codex to pick up the new skill body.
 ```
 code-discipline-skills/
 ├── CLAUDE.md                              ← Copy into any project's CLAUDE.md
+├── AGENTS.md                              ← Copy into any project's AGENTS.md
 ├── README.md                              ← This file
 ├── CURSOR.md                              ← Cursor IDE usage and setup
 ├── CODEX.md                               ← Codex CLI usage and setup

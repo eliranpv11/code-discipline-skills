@@ -132,8 +132,9 @@ If you change the six principles or any other content shared across surfaces, up
 | [`CLAUDE.md`](CLAUDE.md) | Zero-install, paste-into-any-project version |
 | [`.cursor/rules/code-discipline.mdc`](.cursor/rules/code-discipline.mdc) | Cursor IDE rule |
 | [`skills/code-discipline/SKILL.md`](skills/code-discipline/SKILL.md) | Claude Code plugin / Claude.ai / Codex skill body |
+| [`AGENTS.md`](AGENTS.md) | Zero-install version for agent CLIs that read `AGENTS.md` |
 | [`skills/code-discipline/agents/openai.yaml`](skills/code-discipline/agents/openai.yaml) | Codex-specific UI metadata and invocation policy |
 
-The methodology text in the first three files must be identical. The `openai.yaml` does not duplicate the methodology — it only carries Codex-specific fields — but the `default_prompt` should reflect the principles accurately. If you add or remove a principle, update the prompt accordingly.
+The methodology text in the first four files must be identical. The `openai.yaml` does not duplicate the methodology — it only carries Codex-specific fields — but the `default_prompt` should reflect the principles accurately. If you add or remove a principle, update the prompt accordingly.
 
 The version numbers in `.claude-plugin/marketplace.json`, `.claude-plugin/plugin.json`, and `skills/code-discipline/SKILL.md` (`metadata.version`) must all match. Bump them together.

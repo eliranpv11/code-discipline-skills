@@ -1,12 +1,9 @@
----
-description: Coding methodology for production-grade software development. Enforces structured thinking before coding, verifying reality, simplicity, surgical changes, contract awareness, and verifiable success criteria. Use when writing, reviewing, or refactoring any code that must remain correct and maintainable past initial delivery. Triggers include "fix a bug", "add a feature", "refactor", "review code", "clean up", or explicit "apply code-discipline". Do NOT use for throwaway scripts, one-off prototypes, or quick demos.
-alwaysApply: true
----
-
 # Code Discipline
 
 A coding methodology for production systems that must last.
 Not a communication standard. Not an honesty protocol. Purely: how to write code well.
+
+Merge with your project-specific `AGENTS.md` as needed.
 
 **Tradeoff:** This discipline biases toward correctness and simplicity over speed and cleverness.
 For throwaway scripts, apply judgment. For production code — apply everything.
